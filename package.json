@@ -1,0 +1,28 @@
+{
+  "name": "ditto_bot",
+  "version": "1.0.0",
+  "description": "slack bot",
+  "main": "./src/main.ts",
+  "scripts": {
+    "build": "webpack",
+    "prestart": "npm run build",
+    "start": "node ./dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shipduck/ditto_bot.git"
+  },
+  "author": "shipduck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shipduck/ditto_bot/issues"
+  },
+  "homepage": "https://github.com/shipduck/ditto_bot#readme",
+  "devDependencies": {
+    "ts-loader": "^4.4.2",
+    "typescript": "^3.0.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
