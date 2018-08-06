@@ -1,19 +1,10 @@
-import fetch from 'node-fetch';
+import * as slack from '@slack/client';
 
-fetch('https://slack.com/api/chat.postMessage', {
-	'method': 'POST',
-	'headers': {
-		'Authorization': `Bearer ${__env.token}`,
-		'Content-Type': 'application/json;charset=utf-8',
-	},
-	'body': JSON.stringify({
-		'text': 'test',
-		'channel': '#random',
-	}),
-}).then((res) => {
-	return res.json();
-}).then((res) => {
-	console.log(res);
-}).catch((err) => {
-	console.log(err);
-});
+const web = new slack.WebClient(__env.token);
+web.chat.postMessage({ channel: 'random', text: 'This is from @slack/client package' })
+	.then(res => {
+		console.log(res);
+	})
+	.catch(err => {
+		console.error(err);
+	});
