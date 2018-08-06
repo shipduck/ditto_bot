@@ -7,7 +7,7 @@ const nodeExternals = require('webpack-node-externals');
 
 const distPath = path.resolve(__dirname, './dist');
 
-const env = fs.readFileSync(path.resolve(__dirname, './.env')).toString().trim().split('\n').map((e) => {
+const env = fs.readFileSync(path.resolve(__dirname, './.env')).toString().trim().split(/\r?\n/).map((e) => {
 	const [
 		_,
 		key,
