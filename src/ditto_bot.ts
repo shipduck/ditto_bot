@@ -17,10 +17,12 @@ class Message {
 }
 
 export class DittoBot {
-    rtm: slack.RTMClient;
+    private readonly rtm: slack.RTMClient;
+    private readonly web: slack.WebClient;
 
     constructor(token: string) {
         this.rtm = new slack.RTMClient(token);
+        this.web = new slack.WebClient(token);
     }
 
     run() {
@@ -79,8 +81,9 @@ export class DittoBot {
             const match = body.match(titleRegex);
 
             if (match !== null) {
-                const title = decodeURIComponent(match[1]);
-                this.sendMessage(title, channel);
+                const encodedTitle = match[1];
+                const decodedTitle = decodeURIComponent(encodedTitle);
+                this.sendMessage(`<https://namu.wiki/w/${encodedTitle}|${decodedTitle} - 나무위키>`, channel);
             }
         }
     }
@@ -133,6 +136,6 @@ export class DittoBot {
     }
 
     private sendMessage(text: string, channel: string) {
-        this.rtm.sendMessage(text, channel);
+        this.web.chat.postMessage({channel: channel, text: text});
     }
 }
