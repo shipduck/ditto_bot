@@ -77,7 +77,7 @@ export class DittoBot {
                     const match = body.match(titleRegex);
 
                     if (match !== null) {
-                        const title = match[1];
+                        const title = decodeURIComponent(match[1]);
                         this.sendMessage(title, channel);
                     }
                 });
