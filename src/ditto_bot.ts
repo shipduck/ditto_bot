@@ -49,6 +49,8 @@ export class DittoBot {
         const text = message.text;
         const channel = message.channel;
 
+        console.log(message);
+
         if (text === undefined) {
             return;
         }
