@@ -68,22 +68,20 @@ export class DittoBot {
         }
     }
 
-    private onLink(link: string, channel: string) {
+    private async onLink(link: string, channel: string) {
         const linkObj = url.parse(link);
 
         if (linkObj.host === "namu.wiki") {
             const titleRegex = /<title>(.+) - 나무위키<\/title>/;
 
-            fetch(encodeURI(link))
-                .then(res => res.text())
-                .then(body => {
-                    const match = body.match(titleRegex);
+            const body = await fetch(encodeURI(link)).then(res => res.text());
 
-                    if (match !== null) {
-                        const title = decodeURIComponent(match[1]);
-                        this.sendMessage(title, channel);
-                    }
-                });
+            const match = body.match(titleRegex);
+
+            if (match !== null) {
+                const title = decodeURIComponent(match[1]);
+                this.sendMessage(title, channel);
+            }
         }
     }
 
@@ -97,15 +95,15 @@ export class DittoBot {
             if (this.keywordExists(text, ["ㄷㄷ", "ㄷㄷ가마루", "도도가마루"])) {
                 retList.push("https://poolc.slack.com/files/U0HJ454UA/FC2KEA249/image.png");
             }
-            
+
             if (this.keywordExists(text, ["ㅊㅊ", "추천"])) {
                 retList.push("https://files.slack.com/files-pri/T024R0JEB-FC2EN6MEC/image.png");
             }
-            
+
             if (this.keywordExists(text, ["ㅈㄹ", "지랄"])) {
                 retList.push("https://files.slack.com/files-pri/T024R0JEB-FC3ADCTFX/image.png");
             }
-            
+
             if (this.keywordExists(text, ["ㄹㅇ"])) {
                 retList.push("https://files.slack.com/files-pri/T024R0JEB-FC4FMUDF0/image.png");
             }
