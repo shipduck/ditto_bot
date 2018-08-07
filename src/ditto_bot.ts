@@ -71,10 +71,11 @@ export class DittoBot {
         if (linkObj.host === "namu.wiki") {
             const titleRegex = /<title>(.+) - 나무위키<\/title>/;
 
-            fetch(link)
+            fetch(encodeURI(link))
                 .then(res => res.text())
                 .then(body => {
                     const match = body.match(titleRegex);
+
                     if (match !== null) {
                         const title = match[1];
                         this.sendMessage(title, channel);
