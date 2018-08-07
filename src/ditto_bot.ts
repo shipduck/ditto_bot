@@ -48,17 +48,22 @@ export class DittoBot {
         const text = message.text;
         const channel = message.channel;
 
-        if (text.startsWith("<") && text.endsWith(">")) {
-            this.onLink(text.slice(0, text.length - 1).slice(1), channel);
+        const linkRegex = /<[^>]+>/g;
+        const linkMatch = text.match(linkRegex);
+
+        if (linkMatch !== null) {
+            linkMatch.forEach(preLink => {
+                this.onLink(preLink.slice(0, preLink.length - 1).slice(1), channel);
+            })
         }
         else {
+            console.log(message);
             // this.rtm.sendMessage(text, channel);
         }
     }
 
     private onLink(link: string, channel: string) {
         const linkObj = url.parse(link);
-        console.log(linkObj);
 
         if (linkObj.host === "namu.wiki") {
             const titleRegex = /<title>(.+) - 나무위키<\/title>/;
