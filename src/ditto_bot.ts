@@ -13,6 +13,7 @@ class Message {
     event_ts: string;
     ts: string;
     bot_id?: string;
+    message?: Message;
 }
 
 export class DittoBot {
