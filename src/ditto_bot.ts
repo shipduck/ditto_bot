@@ -48,6 +48,10 @@ export class DittoBot {
         const text = message.text;
         const channel = message.channel;
 
+        if (text === undefined) {
+            return;
+        }
+
         const linkRegex = /<[^>]+>/g;
         const linkMatch = text.match(linkRegex);
 
@@ -57,8 +61,7 @@ export class DittoBot {
             })
         }
         else {
-            console.log(message);
-            // this.rtm.sendMessage(text, channel);
+            this.onRawMessage(text, channel);
         }
     }
 
@@ -74,9 +77,60 @@ export class DittoBot {
                     const match = body.match(titleRegex);
                     if (match !== null) {
                         const title = match[1];
-                        this.rtm.sendMessage(title, channel);
+                        this.sendMessage(title, channel);
                     }
                 });
         }
+    }
+
+    private onRawMessage(text: string, channel: string) {
+        let message = "";
+        let prob = 0;
+
+        [message, prob] = ((): [string, number] => {
+            const retList = [] as string[];
+
+            if (this.keywordExists(text, ["ㄷㄷ", "ㄷㄷ가마루", "도도가마루"])) {
+                retList.push("https://poolc.slack.com/files/U0HJ454UA/FC2KEA249/image.png");
+            }
+            
+            if (this.keywordExists(text, ["ㅊㅊ", "추천"])) {
+                retList.push("https://files.slack.com/files-pri/T024R0JEB-FC2EN6MEC/image.png");
+            }
+            
+            if (this.keywordExists(text, ["ㅈㄹ", "지랄"])) {
+                retList.push("https://files.slack.com/files-pri/T024R0JEB-FC3ADCTFX/image.png");
+            }
+            
+            if (this.keywordExists(text, ["ㄹㅇ"])) {
+                retList.push("https://files.slack.com/files-pri/T024R0JEB-FC4FMUDF0/image.png");
+            }
+
+            if (this.keywordExists(text, ["오도가론"])) {
+                retList.push("https://poolc.slack.com/messages/C024R0JEP/");
+            }
+
+            if (retList.length === 0) {
+                return ["", 0];
+            }
+            else {
+                const ret = retList[Math.floor(Math.random() * retList.length)];
+                return [ret, 0.1];
+            }
+        })();
+
+        const sendSuccess = Math.random() < prob;
+
+        if (sendSuccess) {
+            this.sendMessage(message, channel);
+        }
+    }
+
+    private keywordExists(text: string, keywords: string[]) {
+        return keywords.some(keyword => text.indexOf(keyword) !== -1);
+    }
+
+    private sendMessage(text: string, channel: string) {
+        this.rtm.sendMessage(text, channel);
     }
 }
