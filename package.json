@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/shipduck/ditto_bot#readme",
   "devDependencies": {
+    "@types/node-fetch": "^2.1.2",
+    "node-fetch": "^2.2.0",
     "ts-loader": "^4.4.2",
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
