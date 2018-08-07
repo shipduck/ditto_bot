@@ -85,10 +85,10 @@ export class DittoBot {
     }
 
     private onRawMessage(text: string, channel: string) {
-        let message = "";
+        let outText = "";
         let prob = 0;
 
-        [message, prob] = ((): [string, number] => {
+        [outText, prob] = ((): [string, number] => {
             const retList = [] as string[];
 
             if (this.keywordExists(text, ["ㄷㄷ", "ㄷㄷ가마루", "도도가마루"])) {
@@ -123,7 +123,7 @@ export class DittoBot {
         const sendSuccess = Math.random() < prob;
 
         if (sendSuccess) {
-            this.sendMessage(message, channel);
+            this.sendMessage(outText, channel);
         }
     }
 
