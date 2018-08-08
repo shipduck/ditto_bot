@@ -6,7 +6,10 @@
   "scripts": {
     "build": "webpack",
     "prestart": "npm run build",
-    "start": "node ./dist/main.js"
+    "start": "pm2 start ./app.json",
+    "stop": "pm2 stop ./app.json",
+    "prestart:dev": "npm run prestart",
+    "start:dev": "node ./dist/main.js"
   },
   "repository": {
     "type": "git",
