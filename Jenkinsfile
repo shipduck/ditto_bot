@@ -19,8 +19,7 @@ npm run build'''
         sh '''npm restart'''
       }
     }
-
-    stage('Run') {
+    stage('Stop') {
       when { expression { params.Stop == true} }
       steps {
         sh '''npm stop'''
