@@ -1,7 +1,17 @@
 import url from 'url';
 
-import slack from '@slack/client';
-import fetch from 'node-fetch';
+import {
+	RTMClient,
+	WebClient,
+} from '@slack/client';
+
+import {
+	sendRequest,
+	MethodType,
+	ResultType,
+	matchLinks,
+	matchNamuWikiTitle,
+} from './helpers';
 
 interface Message {
 	type: string;
@@ -17,14 +27,12 @@ interface Message {
 }
 
 export class DittoBot {
-	private readonly rtm: slack.RTMClient;
-	private readonly web: slack.WebClient;
-
-	private static linkRegex = /<[^>]+>/g;
+	private readonly rtm: RTMClient;
+	private readonly web: WebClient;
 
 	constructor(token: string) {
-		this.rtm = new slack.RTMClient(token);
-		this.web = new slack.WebClient(token);
+		this.rtm = new RTMClient(token);
+		this.web = new WebClient(token);
 	}
 
 	public run() {
@@ -40,7 +48,7 @@ export class DittoBot {
 		});
 
 		rtm.start();
-		console.log('Bot start');
+		console.log('bot start');
 	}
 
 	private onMessage(message: Message) {
@@ -58,11 +66,10 @@ export class DittoBot {
 			return;
 		}
 
-		const linkMatch = text.match(DittoBot.linkRegex);
-
-		if(linkMatch !== null) {
-			linkMatch.forEach((preLink) => {
-				this.onLink(preLink.slice(0, preLink.length - 1).slice(1), channel);
+		const links = matchLinks(text);
+		if(links.length > 0) {
+			links.forEach((link) => {
+				this.onLink(link, channel);
 			});
 		}
 		else {
@@ -74,18 +81,19 @@ export class DittoBot {
 		const linkObj = url.parse(link);
 
 		if(linkObj.host === 'namu.wiki') {
-			const titleRegex = /<title>(.+) - 나무위키<\/title>/;
+			try {
+				const res = await sendRequest(link, MethodType.GET, ResultType.TEXT);
 
-			const body = await fetch(encodeURI(link)).then((res) => {
-				return res.text();
-			});
+				const title = matchNamuWikiTitle(res);
 
-			const match = body.match(titleRegex);
+				if(title === null) {
+					return;
+				}
 
-			if(match !== null) {
-				const encodedTitle = match[1];
-				const decodedTitle = decodeURIComponent(encodedTitle);
-				this.sendMessage(`<https://namu.wiki/w/${encodedTitle}|${decodedTitle} - 나무위키>`, channel);
+				this.sendMessage(`<${link}|${title} - 나무위키>`, channel);
+			}
+			catch(err) {
+				console.log(err);
 			}
 		}
 	}
@@ -137,6 +145,9 @@ export class DittoBot {
 	}
 
 	private sendMessage(text: string, channel: string) {
+		if(__dev) {
+			text = `${text} : dev`;
+		}
 		this.web.chat.postMessage({
 			'channel': channel,
 			'text': text,
