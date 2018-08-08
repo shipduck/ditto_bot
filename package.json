@@ -9,7 +9,7 @@
     "prestart": "npm run build",
     "start": "pm2 start ./app.json",
     "stop": "pm2 stop ./app.json",
-    "prestart:dev": "NODE_ENV=dev npm run prestart",
+    "prestart:dev": "cross-env NODE_ENV=dev npm run prestart",
     "start:dev": "node ./dist/main.js",
     "lint": "tslint -p ./tsconfig.json"
   },
