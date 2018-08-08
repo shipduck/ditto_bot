@@ -8,6 +8,7 @@ pipeline {
 
   stages {
     stage('Build') {
+      when { expression { params.Run == true} }
       steps {
         sh '''npm install
 npm run build'''
