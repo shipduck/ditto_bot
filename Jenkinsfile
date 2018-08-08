@@ -1,5 +1,11 @@
 pipeline {
   agent any
+
+  parameters {
+    booleanParam(name: "Run", defaultValue: true, description: "")
+    booleanParam(name: "Stop", defaultValue: false, description: "")
+  }
+
   stages {
     stage('Build') {
       steps {
@@ -8,6 +14,7 @@ npm run build'''
       }
     }
     stage('Run') {
+      when { expression { params.Run == true} }
       steps {
         sh '''npm restart'''
       }
