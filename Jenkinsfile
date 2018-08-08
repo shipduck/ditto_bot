@@ -19,6 +19,13 @@ npm run build'''
         sh '''npm restart'''
       }
     }
+
+    stage('Run') {
+      when { expression { params.Stop == true} }
+      steps {
+        sh '''npm stop'''
+      }
+    }
   }
   environment {
     token = 'xoxb-2161018487-411742259925-MwR2rh04n84vTpRwx9HpqIrA'
