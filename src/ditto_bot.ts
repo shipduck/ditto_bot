@@ -26,6 +26,13 @@ interface Message {
 	message?: Message;
 }
 
+interface SendLinkArguments {
+	channel: string;
+	text: string;
+	link: string;
+	color: string;
+}
+
 export class DittoBot {
 	private readonly rtm: RTMClient;
 	private readonly web: WebClient;
@@ -92,7 +99,12 @@ export class DittoBot {
 					return;
 				}
 
-				this.sendMessage(`<${link}|${title} - 나무위키>`, channel);
+				this.sendLink({
+					'text': `${title} - 나무위키`,
+					'link': link,
+					'channel': channel,
+					'color': '00A495',
+				});
 			}
 			catch (err) {
 				console.log(err);
@@ -148,18 +160,6 @@ export class DittoBot {
 		});
 	}
 
-	private sendMessage(text: string, channel: string) {
-		if (__dev) {
-			text = `${text} : dev`;
-		}
-		this.web.chat.postMessage({
-			'channel': channel,
-			'text': text,
-			'unfurl_media': true,
-			'unfurl_links': true,
-		});
-	}
-
 	private sendImage(outText: string, imageLink: string, channel: string) {
 		this.web.chat.postMessage({
 			'channel': channel,
@@ -170,6 +170,24 @@ export class DittoBot {
 				{
 					'fallback': 'Image',
 					'image_url': imageLink,
+				},
+			],
+		});
+	}
+
+	private sendLink(arg: SendLinkArguments) {
+		this.web.chat.postMessage({
+			'channel': arg.channel,
+			'text': '',
+			'unfurl_media': true,
+			'unfurl_links': true,
+			'attachments': [
+				{
+					'fallback': arg.text,
+					'title': arg.text,
+					'title_link': arg.link,
+					// 'text': '요약',
+					'color': `#${arg.color}`,
 				},
 			],
 		});
