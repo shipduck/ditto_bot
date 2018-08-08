@@ -13,6 +13,6 @@
 		"class-name": false,
 		"variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-snake-case"],
 		"no-namespace": false,
-		"no-console": false,
+		"no-console": false
 	}
 }

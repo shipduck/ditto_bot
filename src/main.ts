@@ -1,4 +1,6 @@
-import { DittoBot } from "./ditto_bot";
+import {
+	DittoBot,
+} from './ditto_bot';
 
 const token = process.env.token;
 
