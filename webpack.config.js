@@ -1,29 +1,13 @@
+
 const fs = require('fs');
 
 const path = require('path');
 
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
 
 const distPath = path.resolve(__dirname, './dist');
-
-const env = fs.readFileSync(path.resolve(__dirname, './.env')).toString().trim().split(/\r?\n/).map((e) => {
-	const [
-		_,
-		key,
-		value,
-	] = e.match(/^(.+?)=(.+?)$/);
-
-	return {
-		[key.toLowerCase()]: JSON.stringify(value),
-	};
-}).reduce((a, b) => {
-	return {
-		...a,
-		...b,
-	};
-});
-
 const mode = process.env.NODE_ENV === 'development' ? 'development' : 'production'
 
 module.exports = {
@@ -50,10 +34,10 @@ module.exports = {
 	},
 	'plugins': [
 		new webpack.DefinePlugin({
-			'__dev': mode === 'development',
-			'__env': env,
+			'__dev': mode === 'development'
 		}),
 		new webpack.ProgressPlugin(),
+		new Dotenv()
 	],
 	'target': 'node',
 	'node': {

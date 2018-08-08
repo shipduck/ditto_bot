@@ -1,6 +1,6 @@
 import { DittoBot } from "./ditto_bot";
 
-const token = __env.token;
+const token = process.env.token;
 
 const ditto = new DittoBot(token);
 ditto.run();
