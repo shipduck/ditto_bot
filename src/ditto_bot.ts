@@ -150,7 +150,7 @@ export class DittoBot {
 		const prob = __dev ? 1 : 0.1;
 
 		if (outText !== null && Math.random() < prob) {
-			this.sendImage(outText, imageLink, channel);
+			this.sendImage(imageLink, channel);
 		}
 	}
 
@@ -160,19 +160,8 @@ export class DittoBot {
 		});
 	}
 
-	private sendImage(outText: string, imageLink: string, channel: string) {
-		this.web.chat.postMessage({
-			'channel': channel,
-			'text': outText,
-			'unfurl_media': true,
-			'unfurl_links': true,
-			'attachments': [
-				{
-					'fallback': 'Image',
-					'image_url': imageLink,
-				},
-			],
-		});
+	private sendImage(imageLink: string, channel: string) {
+		this.rtm.sendMessage(imageLink, channel);
 	}
 
 	private sendLink(arg: SendLinkArguments) {
