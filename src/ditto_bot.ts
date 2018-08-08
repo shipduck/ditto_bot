@@ -100,31 +100,31 @@ export class DittoBot {
 		}
 	}
 
-	private checkText(text: string): string {
-		const retList: string[] = [];
+	private getImage(text: string) {
+		const retList: Array<[string, string]> = [];
 
 		if (this.keywordExists(text, ['ㄷㄷ', 'ㄷㄷ가마루', '도도가마루'])) {
-			retList.push('https://poolc.slack.com/files/U0HJ454UA/FC2KEA249/image.png');
+			retList.push(['도도가마루', 'https://poolc.slack.com/files/U0HJ454UA/FC2KEA249/image.png']);
 		}
 
 		if (this.keywordExists(text, ['ㅊㅊ', '추천'])) {
-			retList.push('https://files.slack.com/files-pri/T024R0JEB-FC2EN6MEC/image.png');
+			retList.push(['치치야크', 'https://files.slack.com/files-pri/T024R0JEB-FC2EN6MEC/image.png']);
 		}
 
 		if (this.keywordExists(text, ['ㅈㄹ', '지랄'])) {
-			retList.push('https://files.slack.com/files-pri/T024R0JEB-FC3ADCTFX/image.png');
+			retList.push(['조라마그다라오스', 'https://files.slack.com/files-pri/T024R0JEB-FC3ADCTFX/image.png']);
 		}
 
 		if (this.keywordExists(text, ['ㄹㅇ'])) {
-			retList.push('https://files.slack.com/files-pri/T024R0JEB-FC4FMUDF0/image.png');
+			retList.push(['로아루드로스', 'https://files.slack.com/files-pri/T024R0JEB-FC4FMUDF0/image.png']);
 		}
 
 		if (this.keywordExists(text, ['오도가론'])) {
-			retList.push('https://poolc.slack.com/messages/C024R0JEP/');
+			retList.push(['오도가론', 'https://poolc.slack.com/messages/C024R0JEP/']);
 		}
 
 		if (retList.length === 0) {
-			return null;
+			return [null, null];
 		}
 		else {
 			const ret = retList[Math.floor(Math.random() * retList.length)];
@@ -133,10 +133,12 @@ export class DittoBot {
 	}
 
 	private onRawMessage(text: string, channel: string) {
-		const outText = this.checkText(text);
+		const [outText, imageLink] = this.getImage(text);
 
-		if(outText !== null && Math.random() < 0.1) {
-			this.sendMessage(outText, channel);
+		const prob = __dev ? 1 : 0.1;
+
+		if (outText !== null && Math.random() < prob) {
+			this.sendImage(outText, imageLink, channel);
 		}
 	}
 
@@ -155,6 +157,21 @@ export class DittoBot {
 			'text': text,
 			'unfurl_media': true,
 			'unfurl_links': true,
+		});
+	}
+
+	private sendImage(outText: string, imageLink: string, channel: string) {
+		this.web.chat.postMessage({
+			'channel': channel,
+			'text': outText,
+			'unfurl_media': true,
+			'unfurl_links': true,
+			'attachments': [
+				{
+					'fallback': 'Image',
+					'image_url': imageLink,
+				},
+			],
 		});
 	}
 }
