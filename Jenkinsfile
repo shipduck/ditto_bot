@@ -9,7 +9,8 @@ npm run build'''
     }
     stage('Run') {
       steps {
-        sh 'pm2 --name=ditto start dist/main.js'
+        sh '''pm2 delete ditto
+pm2 --name=ditto start dist/main.js'''
       }
     }
   }
