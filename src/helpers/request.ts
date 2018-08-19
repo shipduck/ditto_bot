@@ -51,6 +51,18 @@ function handleRequest(url: string, methodType: MethodType, resultType: ResultTy
 	}
 }
 
+export async function sendRequest(
+	url: string,
+	methodType: MethodType,
+	resultType: ResultType.TEXT,
+	params?: any,
+): Promise<string>;
+export async function sendRequest(
+	url: string,
+	methodType: MethodType,
+	resultType: ResultType.JSON,
+	params?: any,
+): Promise<any>;
 export async function sendRequest(url: string, methodType: MethodType, resultType: ResultType, params: any = {}) {
 	return await handleRequest(url, methodType, resultType, params);
 }
