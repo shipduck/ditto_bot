@@ -4,14 +4,16 @@
   "description": "slack bot",
   "main": "./src/main.ts",
   "scripts": {
-    "prebuild": "npm run lint",
+    "prebuild": "npm run lint && npm run test",
     "build": "webpack",
     "prestart": "npm run build",
     "start": "pm2 start ./app.json",
     "stop": "pm2 stop ./app.json",
     "prestart:dev": "cross-env NODE_ENV=dev npm run prestart",
     "start:dev": "node ./dist/main.js",
-    "lint": "tslint -p ./tsconfig.json"
+    "lint": "tslint -p ./tsconfig.json",
+    "test": "cross-env TS_NODE_PROJECT=test/tsconfig.json TS_NODE_FILES=true nyc mocha --require ts-node/register \"test/**/*.ts\"",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -24,12 +26,22 @@
   },
   "homepage": "https://github.com/shipduck/ditto_bot#readme",
   "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/chai": "^4.1.4",
     "@types/dotenv-webpack": "^1.5.0",
+    "@types/express": "^4.16.0",
+    "@types/mocha": "^5.2.5",
     "@types/node-fetch": "^2.1.2",
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
     "cross-env": "^5.2.0",
     "dotenv-webpack": "^1.5.7",
+    "express": "^4.16.3",
+    "mocha": "^5.2.0",
     "node-fetch": "^2.2.0",
+    "nyc": "^12.0.2",
     "ts-loader": "^4.4.2",
+    "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typescript": "^3.0.1",
     "webpack": "^4.16.5",
@@ -38,5 +50,21 @@
   },
   "dependencies": {
     "@slack/client": "^4.3.1"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+	],
+    "exclude": [
+      "src/main.ts"
+    ],
+    "reporter": [
+      "html",
+      "text"
+    ],
+    "all": true
   }
 }
