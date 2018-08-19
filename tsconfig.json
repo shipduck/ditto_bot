@@ -22,5 +22,8 @@
 		"esModuleInterop": true,
 		"noErrorTruncation": true,
 		"noUnusedLocals": true
-	}
+	},
+	"include": [
+		"./src/**/*.ts"
+	]
 }

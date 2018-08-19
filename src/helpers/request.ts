@@ -12,14 +12,14 @@ export enum ResultType {
 	TEXT,
 }
 
-function getURL(url: string, method: MethodType, params: any = {}): string {
-	if(Object.keys(params).length === 0) {
+function getURL(url: string, method: MethodType, params?: any): string {
+	if(params !== undefined && Object.keys(params).length === 0) {
 		return url;
 	}
 	return `${url}?${querystring.stringify(params)}`;
 }
 
-function getRequest(url: string, methodType: MethodType, resultType: ResultType, params: any = {}) {
+function getRequest(url: string, methodType: MethodType, params?: any) {
 	const requestURL = getURL(url, methodType, params);
 
 	switch(methodType) {
@@ -29,11 +29,14 @@ function getRequest(url: string, methodType: MethodType, resultType: ResultType,
 		return fetch(requestURL, {
 			'method': 'post',
 			'body': JSON.stringify(params),
+			'headers': {
+				'content-type': 'application/json',
+			},
 		});
 	}
 }
 
-function handleRequest(url: string, methodType: MethodType, resultType: ResultType, params: any = {}) {
+function handleRequest(url: string, methodType: MethodType, resultType: ResultType, params?: any) {
 	const request = getRequest(url, methodType, params);
 
 	switch(resultType) {
