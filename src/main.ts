@@ -29,6 +29,7 @@ class DittoBotSlack extends DittoBot {
 	constructor(token: string) {
 		super();
 
+		this.logger = console;
 		this.rtm = new RTMClient(token);
 		this.web = new WebClient(token);
 	}
