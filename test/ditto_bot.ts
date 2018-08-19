@@ -39,7 +39,7 @@ describe('ditto_bot', () => {
 			return this.onMessage(message);
 		}
 
-		protected sendImage(imageLink: string, channel: string): void {
+		public sendImage(imageLink: string, channel: string): void {
 			this.sendQueue.push({
 				'type': 'image',
 				'link': imageLink,
@@ -47,7 +47,7 @@ describe('ditto_bot', () => {
 			});
 		}
 
-		protected sendLink(arg: SendLinkArguments): void {
+		public sendLink(arg: SendLinkArguments): void {
 			this.sendQueue.push({
 				'type': 'link',
 				'data': arg,

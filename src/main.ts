@@ -55,11 +55,11 @@ class DittoBotSlack extends DittoBot {
 		console.log('bot start');
 	}
 
-	protected sendImage(imageLink: string, channel: string) {
+	public sendImage(imageLink: string, channel: string) {
 		this.rtm.sendMessage(imageLink, channel);
 	}
 
-	protected sendLink(arg: SendLinkArguments) {
+	public sendLink(arg: SendLinkArguments) {
 		this.web.chat.postMessage({
 			'channel': arg.channel,
 			'text': '',
