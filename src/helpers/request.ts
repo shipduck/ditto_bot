@@ -13,7 +13,7 @@ export enum ResultType {
 }
 
 function getURL(url: string, method: MethodType, params?: any): string {
-	if(params !== undefined && Object.keys(params).length === 0) {
+	if(method !== MethodType.GET || (params !== undefined && Object.keys(params).length === 0)) {
 		return url;
 	}
 	return `${url}?${querystring.stringify(params)}`;
