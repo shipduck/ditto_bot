@@ -30,7 +30,7 @@ export interface Logger {
 
 export abstract class DittoBot {
 	protected logger: Logger;
-	protected onMessage(message: Message) {
+	protected async onMessage(message: Message) {
 		// Do not respond on other bot's message
 		if (message.by_bot) {
 			return;
@@ -47,9 +47,7 @@ export abstract class DittoBot {
 
 		const links = matchLinks(text);
 		if (links.length > 0) {
-			links.forEach((link) => {
-				this.onLink(link, channel);
-			});
+			await Promise.all(links.map((link) => this.onLink(link, channel)));
 		}
 		else {
 			this.onRawMessage(text, channel);
