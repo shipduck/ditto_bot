@@ -8,17 +8,11 @@ import {
 	matchNamuWikiTitle,
 } from './helpers';
 
-interface Message {
-	type: string;
+export interface Message {
 	user: string;
 	text: string;
-	client_msg_id: string;
-	team: string;
 	channel: string;
-	event_ts: string;
-	ts: string;
-	bot_id?: string;
-	message?: Message;
+	by_bot: boolean;
 }
 
 export interface SendLinkArguments {
@@ -31,7 +25,7 @@ export interface SendLinkArguments {
 export abstract class DittoBot {
 	protected onMessage(message: Message) {
 		// Do not respond on other bot's message
-		if (message.bot_id !== undefined) {
+		if (message.by_bot) {
 			return;
 		}
 

@@ -9,6 +9,19 @@ import {
 
 const slackToken = process.env.token;
 
+interface SlackMessage {
+	type: string;
+	user: string;
+	text: string;
+	client_msg_id: string;
+	team: string;
+	channel: string;
+	event_ts: string;
+	ts: string;
+	bot_id?: string;
+	message?: SlackMessage;
+}
+
 class DittoBotSlack extends DittoBot {
 	private readonly rtm: RTMClient;
 	private readonly web: WebClient;
@@ -23,9 +36,14 @@ class DittoBotSlack extends DittoBot {
 	public run() {
 		const rtm = this.rtm;
 
-		rtm.addListener('message', (res) => {
+		rtm.addListener('message', (res: SlackMessage) => {
 			try {
-				this.onMessage(res);
+				this.onMessage({
+					'user': res.user,
+					'text': res.text,
+					'channel': res.channel,
+					'by_bot': res.bot_id !== undefined,
+				});
 			}
 			catch (err) {
 				console.error(err);
