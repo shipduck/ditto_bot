@@ -7,6 +7,45 @@ import {
 	WebClient,
 } from '@slack/client';
 
+import {
+	createLogger,
+	format,
+	transports,
+} from 'winston';
+
+const logger = createLogger({
+	'level': __dev ? 'silly' : 'warn',
+	'format': format.simple(),
+	'transports': [
+		new transports.Console(),
+	],
+});
+
+if (__sentry_dsn) {
+	const root = __dirname || process.cwd();
+
+	Promise.all([import('path'), import('winston-raven-sentry')]).then(([path, sentryTransport]) => {
+		logger.transports.push(new sentryTransport({
+			'dsn': __sentry_dsn,
+			'config': {
+				'dataCallback'(data: any) {
+					const stacktrace = data.exception && data.exception[0].stacktrace;
+
+					if (stacktrace && stacktrace.frames) {
+						stacktrace.frames.forEach((frame: any) => {
+							if (frame.filename.startsWith('/')) {
+								frame.filename = `app:///${path.relative(root, frame.filename)}`;
+							}
+						});
+					}
+
+					return data;
+				},
+			},
+		}));
+	});
+}
+
 const slackToken = process.env.token;
 
 interface SlackMessage {
@@ -29,7 +68,7 @@ class DittoBotSlack extends DittoBot {
 	constructor(token: string) {
 		super();
 
-		this.logger = console;
+		this.logger = logger;
 		this.rtm = new RTMClient(token);
 		this.web = new WebClient(token);
 	}

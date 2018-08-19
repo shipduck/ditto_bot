@@ -21,7 +21,8 @@
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"noErrorTruncation": true,
-		"noUnusedLocals": true
+		"noUnusedLocals": true,
+		"baseUrl": "./types"
 	},
 	"include": [
 		"./src/**/*"
