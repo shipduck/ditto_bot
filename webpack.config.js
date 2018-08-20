@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const distPath = path.resolve(__dirname, './dist');
 const mode = process.env.NODE_ENV === 'dev' ? 'development' : 'production';
@@ -33,10 +34,12 @@ module.exports = {
 	},
 	'plugins': [
 		new webpack.DefinePlugin({
-			'__dev': mode === 'development'
+			'__dev': mode === 'development',
+			'__sentry_dsn': process.env.dsn ? process.env.dsn : null,
 		}),
 		new webpack.ProgressPlugin(),
-		new Dotenv()
+		new Dotenv(),
+		new webpack.SourceMapDevToolPlugin({}),
 	],
 	'target': 'node',
 	'node': {
@@ -45,7 +48,7 @@ module.exports = {
 	'externals': [
 		nodeExternals(),
 	],
-	'devtool': '#source-map',
+	'devtool': false,
 	'resolve': {
 		'extensions': [
 			'.ts',
@@ -55,4 +58,9 @@ module.exports = {
 		],
 	},
 	'mode': mode,
+	'optimization': {
+		'minimizer': [
+			new UglifyJsPlugin(),
+		],
+	},
 };

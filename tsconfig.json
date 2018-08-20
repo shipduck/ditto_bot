@@ -12,15 +12,19 @@
 			"es2017"
 		],
 		"outDir": "./build",
-		"rootDir": ".",
+		"rootDir": "./src",
 		"strict": true,
 		"strictNullChecks": false,
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"noErrorTruncation": true,
-		"noUnusedLocals": true
-	}
+		"noUnusedLocals": true,
+		"baseUrl": "./types"
+	},
+	"include": [
+		"./src/**/*"
+	]
 }
