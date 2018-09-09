@@ -1,0 +1,9 @@
+FROM node
+
+RUN npm install -g typescript
+
+COPY . /root/server
+WORKDIR /root/server
+RUN npm run build
+
+ENTRYPOINT node dist/main.js
