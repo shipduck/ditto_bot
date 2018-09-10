@@ -18,7 +18,7 @@ export interface SendLinkArguments {
 	channel: string;
 	text: string;
 	link: string;
-	color: string;
+	color?: string;
 }
 
 export interface Logger {

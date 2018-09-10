@@ -17,7 +17,6 @@ export class NamuWikiModule implements LinkModule {
 					'text': `${title} - 나무위키`,
 					'link': link.href,
 					'channel': channel,
-					'color': '00A495',
 				});
 			}
 			catch (err) {

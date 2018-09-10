@@ -107,10 +107,14 @@ class DittoBotSlack extends DittoBot {
 			'attachments': [
 				{
 					'fallback': arg.text,
-					'title': arg.text,
-					'title_link': arg.link,
-					// 'text': '요약',
-					'color': `#${arg.color}`,
+					'actions': [
+						{
+							'type': 'button',
+							'text': arg.text,
+							'url': arg.link,
+							'style': 'primary',
+						},
+					],
 				},
 			],
 		});

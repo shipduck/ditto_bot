@@ -90,7 +90,6 @@ describe('ditto_bot', () => {
 				'channel': '',
 				'text': 'ejfie - 나무위키',
 				'link': 'https://namu.wiki/w/ejfie',
-				'color': '00A495',
 			},
 		}]);
 		assert.isEmpty(bot.flushErrors());
