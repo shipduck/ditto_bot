@@ -4,7 +4,9 @@ RUN npm install -g typescript
 
 COPY . /root/server
 WORKDIR /root/server
+
 RUN npm install
+RUN echo token=$token > /root/server/.env
 RUN npm run build
 
 ENTRYPOINT node dist/main.js
