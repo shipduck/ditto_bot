@@ -5,6 +5,4 @@ services:
     build:
       context: ..
       dockerfile: docker/dockerfile
-    environment:
-      - DOCKER_HOST=172.17.0.1
     image: ditto_bot
