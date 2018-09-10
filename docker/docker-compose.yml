@@ -6,5 +6,5 @@ services:
       context: ..
       dockerfile: docker/dockerfile
     image: ditto_bot
-	environment:
+    environment:
       - token=$token
