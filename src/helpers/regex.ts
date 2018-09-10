@@ -13,7 +13,7 @@ export function matchLinks(text: string): string[] {
 	}).filter((e) => {
 		return e.startsWith('@') === false;
 	}).map((e) => {
-		return encodeURI(e);
+		return encodeURI(decodeURIComponent(e));
 	});
 }
 
