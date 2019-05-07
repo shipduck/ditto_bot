@@ -9,23 +9,23 @@ interface KeywordsMap {
 const keywordsMap: KeywordsMap[] = [{
 	'keywords': ['ㄷㄷ', 'ㄷㄷ가마루', '도도가마루'],
 	'text': '도도가마루',
-	'image': 'https://poolc.slack.com/files/U0HJ454UA/FC2KEA249/image.png',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Dodogama.png',
 }, {
 	'keywords': ['ㅊㅊ', '추천'],
 	'text': '치치야크',
-	'image': 'https://files.slack.com/files-pri/T024R0JEB-FC2EN6MEC/image.png',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Tzitzi_Ya_Ku.png',
 }, {
 	'keywords': ['ㅈㄹ', '지랄'],
 	'text': '조라마그다라오스',
-	'image': 'https://files.slack.com/files-pri/T024R0JEB-FC3ADCTFX/image.png',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Zorah_Magdaros.png',
 }, {
-	'keywords': ['ㄹㅇ'],
+	'keywords': ['ㄹㅇ', '리얼'],
 	'text': '로아루드로스',
-	'image': 'https://files.slack.com/files-pri/T024R0JEB-FC4FMUDF0/image.png',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Royal_Ludroth.png',
 }, {
-	'keywords': ['오도가론'],
+	'keywords': ['ㅇㄷ'],
 	'text': '오도가론',
-	'image': 'https://poolc.slack.com/messages/C024R0JEP/',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Odogaron.png',
 }];
 
 export class MonsterhunterImageModule implements RawMessageModule {
