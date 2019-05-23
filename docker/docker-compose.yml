@@ -8,3 +8,22 @@ services:
     image: ditto_bot
     environment:
       - token=$token
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+    networks:
+      - redis-network
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    hostname: redis
+    networks:
+      - redis-network
+    volumes:
+      - redis-data:/data
+
+networks:
+  redis-network:
+
+volumes:
+  redis-data:

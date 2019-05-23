@@ -6,7 +6,6 @@ pipeline {
         dir(path: 'docker') {
           sh 'docker-compose build'
         }
-        
       }
     }
   }

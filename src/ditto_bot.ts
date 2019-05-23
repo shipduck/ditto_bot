@@ -3,9 +3,16 @@ import url from 'url';
 import {
 	matchLinks,
 } from './helpers';
-import { LinkModule, DittoBotModule, RawMessageModule } from './modules/base';
-import { NamuWikiModule } from './modules/namuwiki';
-import { MonsterhunterImageModule } from './modules/monsterhunter_image';
+import {
+	LinkModule,
+	DittoBotModule,
+	RawMessageModule,
+} from './modules/base';
+import {
+	ArchiverModule,
+	MonsterhunterImageModule,
+	NamuWikiModule,
+} from './modules';
 
 export interface Message {
 	user: string;
@@ -33,6 +40,7 @@ export abstract class DittoBot {
 	protected rawMessageModules: RawMessageModule[] = [];
 
 	public constructor() {
+		this.addModule(new ArchiverModule());
 		this.addModule(new NamuWikiModule());
 		this.addModule(new MonsterhunterImageModule());
 	}
@@ -52,12 +60,13 @@ export abstract class DittoBot {
 			return;
 		}
 
+		const user = message.user;
 		const text = message.text;
 		const channel = message.channel;
 
 		this.logger.info(message);
 
-		if (text === undefined) {
+		if (user === undefined || text === undefined) {
 			return;
 		}
 
@@ -65,21 +74,19 @@ export abstract class DittoBot {
 		if (links.length > 0) {
 			await Promise.all(links.map((link) => this.onLink(link, channel)));
 		}
-		else {
-			await this.onRawMessage(text, channel);
-		}
+		await this.onRawMessage(user, text, channel);
 	}
 
 	private async onLink(link: string, channel: string) {
 		const linkObj = url.parse(link, true);
-
 		return Promise.all(this.linkModules.map((module) => module.onLink(this, linkObj, channel)));
 	}
 
-	private onRawMessage(text: string, channel: string) {
-		return Promise.all(this.rawMessageModules.map((module) => module.onRawMessage(this, text, channel)));
+	private onRawMessage(user: string, text: string, channel: string) {
+		return Promise.all(this.rawMessageModules.map((module) => module.onRawMessage(this, user, text, channel)));
 	}
 
 	public abstract sendImage(imageLink: string, channel: string): void;
 	public abstract sendLink(arg: SendLinkArguments): void;
+	public abstract sendMessage(message: string, channel: string): void;
 }
