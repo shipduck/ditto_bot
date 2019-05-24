@@ -1,6 +1,7 @@
 import {
 	DittoBot,
 	SendLinkArguments,
+	User,
 } from './ditto_bot';
 
 import {
@@ -126,6 +127,11 @@ class DittoBotSlack extends DittoBot {
 			'channel': channel,
 			'text': message,
 		});
+	}
+
+	public async fetchUsers() {
+		const res = await this.web.users.list();
+		return res.members as User[];
 	}
 }
 

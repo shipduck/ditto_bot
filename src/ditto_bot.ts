@@ -21,6 +21,17 @@ export interface Message {
 	by_bot: boolean;
 }
 
+export interface User {
+	id: string;
+	team_id: string;
+	name: string;
+	deleted: boolean;
+	profile: any;
+	is_bot: boolean;
+	is_app_user: boolean;
+	updated: number;
+}
+
 export interface SendLinkArguments {
 	channel: string;
 	text: string;
@@ -89,4 +100,5 @@ export abstract class DittoBot {
 	public abstract sendImage(imageLink: string, channel: string): void;
 	public abstract sendLink(arg: SendLinkArguments): void;
 	public abstract sendMessage(message: string, channel: string): void;
+	public abstract fetchUsers(): Promise<User[]>;
 }

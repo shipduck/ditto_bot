@@ -68,6 +68,10 @@ describe('ditto_bot', () => {
 			});
 		}
 
+		public async fetchUsers() {
+			return [] as any[];
+		}
+
 		public flushQueue() {
 			return this.sendQueue.splice(0, this.sendQueue.length);
 		}

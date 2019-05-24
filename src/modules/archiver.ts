@@ -10,9 +10,13 @@ import {
 export class ArchiverModule implements RawMessageModule {
 	private readonly key = 'ditto-archive';
 
+	private readonly users: {
+		[key: string]: string;
+	} = {};
+
 	public async onRawMessage(bot: DittoBot, user: string, msg: string, channel: string) {
 		if (msg.indexOf('<@UC3MU7MT7>') !== -1 && msg.indexOf('잉여') !== -1) {
-			this.onCommand(bot, channel);
+			await this.onCommand(bot, channel);
 			return;
 		}
 		const score = Date.now();
@@ -35,12 +39,20 @@ export class ArchiverModule implements RawMessageModule {
 				}
 				++table[key];
 			}
-			const message = Object.keys(table).map((key) => {
+			const x = Object.keys(table).map((key) => {
 				return {
 					'user': key,
 					'count': table[key],
 				};
-			}).sort((a, b) => b.count - a.count).slice(0, 5).map((e) => JSON.stringify(e)).join(' ');
+			}).sort((a, b) => b.count - a.count).slice(0, 5);
+
+			if (x.some((e) => !this.users[e.user])) {
+				const users = await bot.fetchUsers();
+				for (const user of users) {
+					this.users[user.id] = user.name;
+				}
+			}
+			const message = x.map((e) => `${this.users[e.user]}: ${e.count}`).join(' ');
 			bot.sendMessage(message, channel);
 		}
 		catch (error) {
