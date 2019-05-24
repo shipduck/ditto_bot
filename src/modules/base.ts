@@ -11,7 +11,7 @@ export namespace LinkModule {
 }
 
 export interface RawMessageModule {
-	onRawMessage(bot: DittoBot, text: string, channel: string): Promise<void>;
+	onRawMessage(bot: DittoBot, user: string, text: string, channel: string): Promise<void>;
 }
 export namespace RawMessageModule {
 	export function isImplemented(module: DittoBotModule): module is RawMessageModule {

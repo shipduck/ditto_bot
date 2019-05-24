@@ -5,14 +5,21 @@ import { assert } from 'chai';
 
 import { DittoBot, SendLinkArguments, Message } from '../src/ditto_bot';
 
-type SendData = {
-	'type': 'image',
-	'link': string,
-	'channel': string,
-} | {
-	'type': 'link',
-	'data': SendLinkArguments,
-};
+type SendData = (
+	| {
+		'type': 'image',
+		'link': string,
+		'channel': string,
+	}
+	| {
+		'type': 'link',
+		'data': SendLinkArguments,
+	}
+	| {
+		'type': 'message',
+		'message': string;
+	}
+);
 
 describe('ditto_bot', () => {
 	class TestDittoBot extends DittoBot {
@@ -51,6 +58,13 @@ describe('ditto_bot', () => {
 			this.sendQueue.push({
 				'type': 'link',
 				'data': arg,
+			});
+		}
+
+		public sendMessage(message: string, channel: string): void {
+			this.sendQueue.push({
+				'type': 'message',
+				'message': message,
 			});
 		}
 
@@ -109,5 +123,21 @@ describe('ditto_bot', () => {
 		const message = bot.flushQueue();
 		assert.equal(message.length, 1);
 		assert.equal(message[0].type, 'image');
+	});
+
+	it('message', async () => {
+		const bot = new TestDittoBot();
+
+		await bot.receiveMessage({
+			'channel': '',
+			'user': 'test',
+			'text': '<@UC3MU7MT7> 잉여',
+			'by_bot': false,
+		});
+
+		assert.isEmpty(bot.flushErrors());
+		const message = bot.flushQueue();
+		assert.equal(message.length, 1);
+		assert.equal(message[0].type, 'message');
 	});
 });

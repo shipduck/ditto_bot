@@ -1,5 +1,6 @@
 import {
-	DittoBot, SendLinkArguments,
+	DittoBot,
+	SendLinkArguments,
 } from './ditto_bot';
 
 import {
@@ -117,6 +118,13 @@ class DittoBotSlack extends DittoBot {
 					],
 				},
 			],
+		});
+	}
+
+	public sendMessage(message: string, channel: string) {
+		this.web.chat.postMessage({
+			'channel': channel,
+			'text': message,
 		});
 	}
 }

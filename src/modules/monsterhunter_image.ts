@@ -29,7 +29,7 @@ const keywordsMap: KeywordsMap[] = [{
 }];
 
 export class MonsterhunterImageModule implements RawMessageModule {
-	public async onRawMessage(bot: DittoBot, msg: string, channel: string) {
+	public async onRawMessage(bot: DittoBot, user: string, msg: string, channel: string) {
 		const matched = this.getImage(msg);
 
 		const prob = __dev ? 1 : 0.1;
