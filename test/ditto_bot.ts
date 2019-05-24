@@ -131,7 +131,7 @@ describe('ditto_bot', () => {
 		await bot.receiveMessage({
 			'channel': '',
 			'user': 'test',
-			'text': '잉여',
+			'text': '<@UC3MU7MT7> 잉여',
 			'by_bot': false,
 		});
 

@@ -11,7 +11,7 @@ export class ArchiverModule implements RawMessageModule {
 	private readonly key = 'ditto-archive';
 
 	public async onRawMessage(bot: DittoBot, user: string, msg: string, channel: string) {
-		if (msg.indexOf('잉여') !== -1) {
+		if (msg.indexOf('<@UC3MU7MT7>') !== -1 && msg.indexOf('잉여') !== -1) {
 			this.onCommand(bot, channel);
 			return;
 		}
