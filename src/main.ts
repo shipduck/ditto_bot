@@ -129,6 +129,14 @@ class DittoBotSlack extends DittoBot {
 		});
 	}
 
+	public sendBlocks(blocks: any[], channel: string) {
+		this.web.chat.postMessage({
+			'channel': channel,
+			'text': 'fallback text',
+			'blocks': blocks,
+		});
+	}
+
 	public async fetchUsers() {
 		const res = await this.web.users.list();
 		return res.members as User[];

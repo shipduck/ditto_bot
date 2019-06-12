@@ -100,5 +100,6 @@ export abstract class DittoBot {
 	public abstract sendImage(imageLink: string, channel: string): void;
 	public abstract sendLink(arg: SendLinkArguments): void;
 	public abstract sendMessage(message: string, channel: string): void;
+	public abstract sendBlocks(blocks: any[], channel: string): void;
 	public abstract fetchUsers(): Promise<User[]>;
 }

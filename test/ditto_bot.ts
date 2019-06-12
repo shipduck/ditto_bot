@@ -68,6 +68,13 @@ describe('ditto_bot', () => {
 			});
 		}
 
+		public sendBlocks(blocks: any[], channel: string): void {
+			this.sendQueue.push({
+				'type': 'message',
+				'message': 'message',
+			});
+		}
+
 		public async fetchUsers() {
 			return [] as any[];
 		}
