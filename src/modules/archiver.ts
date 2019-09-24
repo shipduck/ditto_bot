@@ -20,7 +20,7 @@ export class ArchiverModule implements RawMessageModule {
 
 	public async onRawMessage(bot: DittoBot, user: string, msg: string, channel: string) {
 		if (msg.indexOf('<@UC3MU7MT7>') !== -1 && msg.indexOf('잉여') !== -1) {
-			const showAll = user === 'U0EJHELHL' && msg.indexOf('all') !== -1;
+			const showAll = msg.indexOf('all') !== -1;
 			await this.onCommand(bot, channel, showAll);
 			return;
 		}
