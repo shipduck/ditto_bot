@@ -6,5 +6,5 @@ steps:
 - name: build
   image: node
   commands:
-  - npm i --production
+  - npm ci
   - npm run build
