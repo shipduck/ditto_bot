@@ -1,0 +1,10 @@
+kind: pipeline
+type: docker
+name: ditto
+
+steps:
+- name: build
+  image: node
+  commands:
+  - npm i --production
+  - npm run build
