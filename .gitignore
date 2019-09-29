@@ -62,3 +62,6 @@ typings/
 
 # compiled output
 /dist
+
+# VS Code
+.vscode/
