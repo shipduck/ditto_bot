@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    image: ditto_bot
+    image: registry.skyser.kr/shipduck/ditto_bot
     environment:
       - token=$token
       - REDIS_HOST=redis
