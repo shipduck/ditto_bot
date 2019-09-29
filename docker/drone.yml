@@ -2,9 +2,14 @@ kind: pipeline
 type: docker
 name: ditto
 
+platform:
+  os: linux
+  arch: arm
+
 steps:
 - name: build
-  image: node
-  commands:
-  - npm ci
-  - npm run build
+  image: plugins/docker
+  settings:
+    registry: registry.skyser.kr
+    repo: registry.skyser.kr/shipduck/ditto_bot
+    dockerfile: /drone/src/docker/Dockerfile
