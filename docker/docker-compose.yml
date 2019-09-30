@@ -21,6 +21,10 @@ services:
       - redis-network
     volumes:
       - redis-data:/data
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == raspberrypi
 
 networks:
   redis-network:
