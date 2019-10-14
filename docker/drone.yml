@@ -23,3 +23,8 @@ steps:
   environment:
    portainer_webhook:
      from_secret: portainer_webhook
+  when:
+    branch:
+    - master
+    event:
+    - push
