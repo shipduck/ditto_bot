@@ -26,6 +26,10 @@ const keywordsMap: KeywordsMap[] = [{
 	'keywords': ['ㅇㄷ'],
 	'text': '오도가론',
 	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Odogaron.png',
+}, {
+	'keywords': ['이불', '졸려', '잘래', '잠와', '이블조'],
+	'text': '이블조',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Evil_Jaw.png',
 }];
 
 export class MonsterhunterImageModule implements RawMessageModule {
