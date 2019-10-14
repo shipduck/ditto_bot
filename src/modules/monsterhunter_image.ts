@@ -29,7 +29,7 @@ const keywordsMap: KeywordsMap[] = [{
 }, {
 	'keywords': ['이불', '졸려', '잘래', '잠와', '이블조'],
 	'text': '이블조',
-	'image': 'https://github.com/2kindsofcs/ditto_bot/blob/add_evil_jaw/images/Evil_Jaw.png',
+	'image': 'https://github.com/shipduck/ditto_bot/blob/master/images/Evil_Jaw.png',
 }];
 
 export class MonsterhunterImageModule implements RawMessageModule {
