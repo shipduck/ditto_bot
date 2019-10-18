@@ -5,7 +5,7 @@ const characters = [
 ];
 
 export function generateBar(value: number): string {
-	let n = Math.round(value / 500);
+	let n = Math.round(value / 1000);
 	let str = '';
 	const step = 2;
 	while(n >= step) {
