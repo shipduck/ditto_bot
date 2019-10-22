@@ -36,7 +36,7 @@ export class MonsterhunterImageModule implements RawMessageModule {
 	public async onRawMessage(bot: DittoBot, user: string, msg: string, channel: string) {
 		const matched = this.getImage(msg);
 
-		const prob = __dev ? 1 : 0.1;
+		const prob = __dev ? 1 : 0.35;
 
 		if (matched !== null && Math.random() < prob) {
 			bot.sendImage(matched.image, channel);
