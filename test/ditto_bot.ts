@@ -100,26 +100,6 @@ describe('ditto_bot', () => {
 		assert.deepEqual(bot.flushQueue(), []);
 	});
 
-	it('namuwiki link message', async () => {
-		const bot = new TestDittoBot();
-
-		await bot.receiveMessage({
-			'channel': '',
-			'user': '',
-			'text': '<https://namu.wiki/w/ejfie> hello',
-			'by_bot': false,
-		});
-		assert.deepEqual(bot.flushQueue(), [{
-			'type': 'link',
-			'data': {
-				'channel': '',
-				'text': 'ejfie - 나무위키',
-				'link': 'https://namu.wiki/w/ejfie',
-			},
-		}]);
-		assert.isEmpty(bot.flushErrors());
-	});
-
 	it('image', async () => {
 		const bot = new TestDittoBot();
 

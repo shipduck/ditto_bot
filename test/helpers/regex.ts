@@ -1,6 +1,6 @@
 import 'mocha';
 import { assert } from 'chai';
-import { matchLinks, matchNamuWikiTitle } from '../../src/helpers';
+import { matchLinks } from '../../src/helpers';
 
 describe('helpers', () => { describe('regex', () => {
 	describe('matchLinks', () => {
@@ -15,19 +15,6 @@ describe('helpers', () => { describe('regex', () => {
 		it('matched', () => {
 			assert.deepEqual(matchLinks('<https://google.com>'), ['https://google.com']);
 			assert.deepEqual(matchLinks('<https://twitter.com> <@U1293D>'), ['https://twitter.com']);
-		});
-	});
-
-	describe('matchNamuWikiTitle', () => {
-		it('not matched', () => {
-			assert.isNull(matchNamuWikiTitle('<title></title>'));
-			assert.isNull(matchNamuWikiTitle(''));
-			assert.isNull(matchNamuWikiTitle('some plain text'));
-		});
-
-		it('matched', () => {
-			assert.equal(matchNamuWikiTitle('<title>afjie - 나무위키</title>'), 'afjie');
-			assert.equal(matchNamuWikiTitle('<title>%20 - 나무위키</title>'), ' ');
 		});
 	});
 }); });
