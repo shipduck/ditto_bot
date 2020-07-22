@@ -100,22 +100,6 @@ describe('ditto_bot', () => {
 		assert.deepEqual(bot.flushQueue(), []);
 	});
 
-	it('image', async () => {
-		const bot = new TestDittoBot();
-
-		await bot.receiveMessage({
-			'channel': '',
-			'user': '',
-			'text': 'ㄷㄷ',
-			'by_bot': false,
-		});
-
-		assert.isEmpty(bot.flushErrors());
-		const message = bot.flushQueue();
-		assert.equal(message.length, 1);
-		assert.equal(message[0].type, 'image');
-	});
-
 	it('message', async () => {
 		const bot = new TestDittoBot();
 
