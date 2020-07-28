@@ -11,6 +11,10 @@ services:
       - REDIS_HOST=redis
     depends_on:
       - redis
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == raspberrypi
     networks:
       - redis-network
   redis:
