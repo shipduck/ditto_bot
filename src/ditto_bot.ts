@@ -10,8 +10,6 @@ import {
 } from './modules/base';
 import {
 	ArchiverModule,
-	MonsterhunterImageModule,
-	NamuWikiModule,
 } from './modules';
 
 export interface Message {
@@ -52,8 +50,6 @@ export abstract class DittoBot {
 
 	public constructor() {
 		this.addModule(new ArchiverModule());
-		this.addModule(new NamuWikiModule());
-		this.addModule(new MonsterhunterImageModule());
 	}
 
 	public addModule(module: DittoBotModule) {

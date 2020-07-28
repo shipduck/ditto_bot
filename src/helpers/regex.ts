@@ -1,5 +1,4 @@
 const regexLink = /<[^>]+>/g;
-const regexNamuWikiTitle = /<title>(.+) - 나무위키<\/title>/;
 
 export function matchLinks(text: string): string[] {
 	const match = text.match(regexLink);
@@ -15,14 +14,4 @@ export function matchLinks(text: string): string[] {
 	}).map((e) => {
 		return encodeURI(decodeURI(e));
 	});
-}
-
-export function matchNamuWikiTitle(text: string): string {
-	const match = text.match(regexNamuWikiTitle);
-
-	if(match === null) {
-		return null;
-	}
-
-	return decodeURIComponent(match.pop());
 }
