@@ -24,13 +24,6 @@ export class ArchiverModule implements RawMessageModule {
 			await this.onCommand(bot, channel, showAll);
 			return;
 		}
-		const score = Date.now();
-		try {
-			await redis.zadd(this.key, `${score}`, `${score}:${user}`);
-		}
-		catch (error) {
-			console.log(error);
-		}
 	}
 
 	public async onCommand(bot: DittoBot, channel: string, showAll: boolean = false) {
