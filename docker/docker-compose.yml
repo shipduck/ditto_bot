@@ -9,29 +9,7 @@ services:
     environment:
       - token=$token
       - REDIS_HOST=redis
-    depends_on:
-      - redis
     deploy:
       placement:
         constraints:
-          - node.hostname == raspberrypi
-    networks:
-      - redis-network
-  redis:
-    image: redis:alpine
-    command: redis-server --appendonly yes
-    hostname: redis
-    networks:
-      - redis-network
-    volumes:
-      - redis-data:/data
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == raspberrypi
-
-networks:
-  redis-network:
-
-volumes:
-  redis-data:
+          - node.hostname == jetson
