@@ -13,6 +13,13 @@ steps:
     registry: registry.skyser.kr
     repo: registry.skyser.kr/shipduck/ditto_bot
     dockerfile: /drone/src/docker/Dockerfile
+    config: |
+    {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "auth": $DOCKER_HUB_TOKEN
+      }
+    }
 
 - name: publish
   image: alpine
