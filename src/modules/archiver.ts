@@ -28,9 +28,15 @@ export class ArchiverModule implements RawMessageModule {
 
 	public async onCommand(bot: DittoBot, channel: string, showAll: boolean = false) {
 		try {
+
+			const zrangeBegin = new Date();
+			const entries = await redis.zrangebyscore(this.key, '-inf', '+inf');
+			const zrangeEnd = new Date();
+
+			console.log('Zrange time: ', (zrangeBegin.getTime() - zrangeEnd.getTime()) / 1000 , ' seconds');
+
 			const sortBegin = new Date();
 
-			const entries = await redis.zrangebyscore(this.key, '-inf', '+inf');
 			const table: { [key: string]: number; } = {};
 			for (const entry of entries) {
 				const key = entry.split(':').pop();
