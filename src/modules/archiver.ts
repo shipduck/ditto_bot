@@ -33,7 +33,7 @@ export class ArchiverModule implements RawMessageModule {
 			const entries = await redis.zrangebyscore(this.key, '-inf', '+inf');
 			const zrangeEnd = new Date();
 
-			console.log('Zrange time: ', (zrangeBegin.getTime() - zrangeEnd.getTime()) / 1000 , ' seconds');
+			console.log('Zrange time: ', (zrangeEnd.getTime() - zrangeBegin.getTime()) / 1000 , ' seconds');
 
 			const sortBegin = new Date();
 
@@ -71,7 +71,7 @@ export class ArchiverModule implements RawMessageModule {
 
 			const fetchEnd = new Date();
 
-			console.log('Fetch time: ', (fetchBegin.getTime() - fetchEnd.getTime()) / 1000, ' seconds');
+			console.log('Fetch time: ', (fetchEnd.getTime() - fetchBegin.getTime()) / 1000, ' seconds');
 
 			const blocks = [
 				{
