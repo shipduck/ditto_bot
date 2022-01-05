@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:14
 
 RUN mkdir /root/server
 WORKDIR /root/server
