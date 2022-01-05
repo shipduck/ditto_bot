@@ -28,6 +28,8 @@ export class ArchiverModule implements RawMessageModule {
 
 	public async onCommand(bot: DittoBot, channel: string, showAll: boolean = false) {
 		try {
+			const sortBegin = new Date();
+			
 			const entries = await redis.zrangebyscore(this.key, '-inf', '+inf');
 			const table: { [key: string]: number; } = {};
 			for (const entry of entries) {
@@ -43,10 +45,16 @@ export class ArchiverModule implements RawMessageModule {
 					'count': table[key],
 				};
 			}).sort((a, b) => b.count - a.count);
+			
+			const sortEnd = new Date();
+			
+			console.log("Sort time: ", (sortEnd.getTime() - sortBegin.getTime()) / 1000, " seconds");
 
 			if (!showAll) {
 				x = x.slice(0, 5);
 			}
+			
+			const fetchBegin = new Date();
 
 			if (x.some((e) => !this.users[e.user])) {
 				const users = await bot.fetchUsers();
@@ -54,6 +62,11 @@ export class ArchiverModule implements RawMessageModule {
 					this.users[user.id] = user.name;
 				}
 			}
+			
+			const fetchEnd = new Date();
+			
+			console.log("Fetch time: ", (fetchBegin.getTime() - fetchEnd.getTime()) / 1000, " seconds");
+			
 			const blocks = [
 				{
 					'type': 'section',
